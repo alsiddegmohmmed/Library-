@@ -8,13 +8,26 @@ function Book(title, author, pages, read) {
 
 }
 
+function render() {
+    let libraryBook = document.querySelector("library") ; 
+    for (let i = 0 ; i < myLibrary.length; i++) {
+        console.log(myLibrary[i])
+    }
+}
+
+
 function addBookToLibrary () {
      let title = document.querySelector("#title").value;
      let author= document.querySelector("#author").value;
      let  pages = document.querySelector("#pages").value;
      let read= document.querySelector("#read").checked;
      let newBook = new Book(title, author, pages, read); 
+     myLibrary.push(newBook); 
      console.log(newBook)
+
+     render (); 
+     
+     
 }
 
 
@@ -25,8 +38,11 @@ newBookbtn.addEventListener("click", function() {
     newBookForm.style.display = "block"; 
 })
 
-document.querySelector("#new-book-form")
-// continue from 12:40 .
+document.querySelector("#new-book-form").addEventListener("submit", function(event) {
+    event.preventDefault(); 
+    addBookToLibrary();
+})
+
 
 
 console.log("hello world")
