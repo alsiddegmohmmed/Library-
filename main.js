@@ -8,13 +8,44 @@ function Book(title, author, pages, read) {
 
 }
 
+Book.prototype.toggleRead = function() {
+    this.read = !this.read; 
+}
+
+function toggleRead(index) {
+    myLibrary[index].toggleRead(); 
+    render(); 
+}
+
 function render() {
-    let libraryBook = document.querySelector("library") ; 
+    let libraryEl = document.querySelector("#library") ; 
+    libraryEl.innerHTML = ""; 
     for (let i = 0 ; i < myLibrary.length; i++) {
-        console.log(myLibrary[i])
+        let book  = myLibrary[i]; 
+        let bookEl = document.createElement("div"); 
+        bookEl.setAttribute("class", "book-card");
+        bookEl.innerHTML = `
+        <div class = "card-header">
+        <h3 class="title">${book.title}</h3>
+        <h5 class = "author"> by ${book.author}</h5>
+        </div>
+        <div class= "card-body"> 
+        <p>${book.pages} pages</p>
+        <p class = "read-status"> ${book.read ? "Read" : "Not Read Yet"}</p>
+        <button class="remove-btn" onclick="removeBook(${i})">Remove</button>
+        <button class="toggele-read-btn" onclick="toggleRead(${i})">Toggle Read</button>
+        
+        </div>
+        `;
+        libraryEl.appendChild(bookEl);
     }
 }
 
+
+function removeBook(index) {
+    myLibrary.splice(index,1)
+    render()
+}
 
 function addBookToLibrary () {
      let title = document.querySelector("#title").value;
@@ -24,6 +55,8 @@ function addBookToLibrary () {
      let newBook = new Book(title, author, pages, read); 
      myLibrary.push(newBook); 
      console.log(newBook)
+
+     //continue from 14:00  
 
      render (); 
      
